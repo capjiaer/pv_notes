@@ -1,0 +1,32 @@
+# ipmerge 脚本模板分析
+
+## 基本设置
+- topdir = bue_hbmphy_midstack_ew
+- workdir = /projects/dongting/work/be/chenanping/bue_hbmphy_midstack_ew/V2025-03-11_main/runs/pv_calibre.ipmerge
+- input_design = /projects/dongting/work/be/chenanping/bue_hbmphy_midstack_ew/V2025-03-11_main/data/pv_calibre
+- real_input = /projects/dongting/work/be/liuxiang/data/256303110809/bue_hbmphy_midstack_ew.oas
+- IPmerge_list = /projects/dongting/work/be/chenanping/bue_hbmphy_midstack_ew/V2025-03-11_main/runs/pv_calibre.ipmerge/IPmerge_List.txt
+- merged_file = /projects/dongting/work/be/chenanping/bue_hbmphy_midstack_ew/V2025-03-11_main/data/pv_calibre/ipmerge/bue_hbmphy_midstack_ew.ipmerge.merged.oas
+- merge_mode = overwrite
+- timestamp = 2025_03_31_15_01_58
+- sealing_mode = 0
+- sealing_script = /projects/dongting/work/be/chenanping/bue_hbmphy_midstack_ew/V2025-03-11_main/runs/pv_calibre.ipmerge/create_ref_ipmerge.2025_03_31_15_01_58.tcl
+
+## 执行流程
+1. 切换到工作目录: `cd $workdir`
+2. 设置环境变量: `setenv MGC_CWB_TMP_DIR $workdir`
+3. 条件判断 - 如果 sealing_mode 等于 1，则执行:
+   ```
+   bsub -Is -q pelican02 -n 16 -R "rusage[mem=16000] span[hosts=1]" calibredrv $sealing_script |& tee -i calibre_sealingmerge_${timestamp}.log
+   ```
+4. 执行主要的合并操作:
+   ```
+   bsub -Is -q pelican02 -n 16 -R "rusage[mem=16000] span[hosts=1]" calibredrv -a layout filemerge -in $real_input -in $IPmerge_list -out $merged_file -topcell $topcell -mode $merge_mode -reportconflicts |& tee -i calibre_merge_libs_${timestamp}.log
+   ```
+
+## 说明
+这是一个用于IP合并(ipmerge)的脚本模板，主要用于将多个设计文件合并成一个。脚本设置了各种路径和参数，然后使用bsub提交作业到计算集群上执行calibredrv命令进行文件合并操作。
+## 补充说明
+IP Merge 需要注意的是
+1：merge的顺序， 正常来说 应该加 -preserve 
+STD -> MEM -> IO -> IP -> Block gds

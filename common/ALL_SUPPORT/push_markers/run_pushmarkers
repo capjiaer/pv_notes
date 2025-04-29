@@ -1,0 +1,9 @@
+#!/bin/csh
+
+setenv MGC_CWB_CONVERT_ZWPATH_TO_POLYGON 1
+
+#$MGC_HOME/bin/calibredrv
+#bsub -q star1b_pa -n 128 calibredrv
+
+bsub -q star1b_pa -n 128 calibredrv pushdownRDB_v7.2.1.tcl -rdbIn /projects/star1_b0/p95_pd/wanghaonan/0122fpdrc/STAR_1/0122fpdrc/main/runs/pv_calibre.CbFPDRC_SAMSUNG/drc_result.db -origDB /projects/star1_b0/p95_pd/wanghaonan/0122fpdrc/STAR_1/0122fpdrc/main/data/STAR_1.CbFPIPMerge.merged.oas -cellFile cell.list -rdbout /projects/star1_b0/p95_pd/wanghaonan/0122fpdrc/STAR_1/0122fpdrc/main/runs/pv_calibre.CbFPDRC_SAMSUNG/pushed.rdb -promote 1 -blockRDB 1 -boundaryLayer 62.21 |& tee push_down.log
+#-boundaryLayer 108.0 -debug 1 

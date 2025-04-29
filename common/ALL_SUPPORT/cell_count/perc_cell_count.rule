@@ -1,0 +1,40 @@
+PERC REPORT "perc.sum"
+MASK SVDB DIRECTORY "svdb" QUERY
+
+SOURCE SYSTEM SPICE
+SOURCE PATH "%%LAYOUT_CDL%%"
+SOURCE PRIMARY "%%TOP_CELL%%"
+
+DFM DATABASE "dfmdb" OVERWRITE REVISIONS [ALL]
+PERC NETLIST SOURCE
+DRC ICSTATION YES
+
+PERC LOAD Device_Count_0 INIT init_1 SELECT run_1 run_2 SELECTTYPE INFO run_1 run_2
+DFM YS AUTOSTART EXIT run
+
+TVF FUNCTION Device_Count_0 [/*
+    package require CalibreLVS_PERC
+    package require CalibrePERCLDL_CHECKS
+
+    proc init_1 {} {
+        perc_netlist::setup_check -check_type DEVICE_COUNT
+    }
+
+    proc run_1 {} {
+        perc_netlist::run_check -check_type DEVICE_COUNT
+    }
+
+    proc run_2 {} {
+        perc_netlist::run_check -check_type DEVICE_COUNT
+    }
+
+
+*/]
+
+TVF FUNCTION EXIT [/*
+    proc run {} {
+        ldl::export_perc
+        ldl::execute_perc
+        exit -force
+    }
+*/]

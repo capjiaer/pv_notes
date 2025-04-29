@@ -1,0 +1,77 @@
+set wb [find objects -class cwbWorkBench]
+set L [$wb cget -_layout]
+
+#$L connect "CA" "M1" by VA
+#$L connect "CA" "M1" by VB
+#$L connect "CB" "M1" by VA
+#$L connect "CB" "M1" by VB
+
+## M1 M2 BY V1
+$L connect 15.0 17.0  by 16.0
+$L connect 15.0 17.0  by 16.1
+$L connect 15.0 17.0  by 16.3
+$L connect 15.0 17.0  by 16.8
+$L connect 15.0 17.0  by 16.15
+
+## M2 M3 BY V2
+$L connect 17.0 19.0 by 18.0
+$L connect 17.0 19.0 by 18.1
+$L connect 17.0 19.0 by 18.3
+$L connect 17.0 19.0 by 18.8
+$L connect 17.0 19.0 by 18.15
+
+# M3 F4 BY MF
+$L connect 19.0 177.0 by 714.0
+$L connect 19.0 177.0 by 714.1
+$L connect 19.0 177.0 by 714.3
+$L connect 19.0 177.0 by 714.15
+#$L connect 19.235 177.0 by 714.0
+#$L connect 19.235 177.0 by 714.1
+#$L connect 19.235 177.0 by 714.3
+#$L connect 19.235 177.0 by 714.15
+#$L connect 19.236 177.0 by 714.0
+#$L connect 19.236 177.0 by 714.1
+#$L connect 19.236 177.0 by 714.3
+#$L connect 19.236 177.0 by 714.15
+
+$L connect 177.0 178.0 by 149.0
+$L connect 177.0 178.0 by 149.1
+$L connect 177.0 178.0 by 149.15
+
+$L connect 178.0 171.0 by 603.0
+$L connect 178.0 171.0 by 603.1
+$L connect 178.0 171.0 by 603.15
+
+$L connect 171.0 196.0 by 202.0
+$L connect 171.0 196.0 by 202.1
+$L connect 171.0 196.0 by 202.15
+
+$L connect 196.0 596.0 by 595.0
+$L connect 196.0 596.0 by 595.1
+$L connect 196.0 596.0 by 595.15
+
+$L connect 596.0 598.0 by 597.0
+$L connect 596.0 598.0 by 597.1
+$L connect 596.0 598.0 by 597.15
+
+$L connect 598.0 688.0 by 687.0
+$L connect 598.0 688.0 by 687.1
+$L connect 598.0 688.0 by 687.15
+
+$L connect 688.0 695.0 by 696.0
+$L connect 688.0 695.0 by 696.1
+$L connect 688.0 695.0 by 696.15
+
+$L connect 695.0 700.0 by 699.0
+$L connect 695.0 700.0 by 699.1
+$L connect 695.0 700.0 by 699.15
+
+$L connect 700.0 136.0 by 599
+$L connect 700.0 136.0 by 599.1
+
+
+$L connect 136.0 137.0 by 159.0
+$L connect 136.0 137.0 by 159.1
+
+$L connect 137.0 69.0 by 70.0
+$L connect 137.0 69.0 by 70.1

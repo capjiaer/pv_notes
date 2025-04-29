@@ -1,0 +1,46 @@
+// For F4 layer FILL
+Boundary_checked = COPY OUTLINE
+Boundary_COPY = COPY Boundary_checked
+Layer_COPY_F4 = OR dGRCLC.Fx.DEN.Fy.2_F4_P1_temp0 (DATA_EXTENT NOT INTERACT dGRCLC.Fx.DEN.Fy.2_F4_P1_temp0)
+Layer_COPY2_F4 = OR dGRCLC.Fx.DEN.Fy.2_F4_P2_temp0 (DATA_EXTENT NOT INTERACT dGRCLC.Fx.DEN.Fy.2_F4_P2_temp0)
+exempt_COPY_F4 = COPY dGRCLC.Fx.DEN.Fy.2_F4_P4_temp0
+Boundary_rect = EXTENTS Boundary_checked
+exempt_COPY_MxFxDx = COPY IND_not_customizedIND
+Layer_COPY_MxFx = OR dGRCLC.MxLast.DEN.FxFirst.2_P1_temp0 (DATA_EXTENT NOT INTERACT dGRCLC.MxLast.DEN.FxFirst.2_P1_temp0)
+Layer_COPY2_MxFx = OR dGRCLC.MxLast.DEN.FxFirst.2_P2_temp0 (DATA_EXTENT NOT INTERACT dGRCLC.MxLast.DEN.FxFirst.2_P2_temp0)
+
+F4_CFILL_over_af_test = SIZE F4CFILL BY 0.141
+F4_CFILLOPC_over_af_test = SIZE F4CFILLOPC BY 0.066
+F4_split_over_af_test = SIZE F4_split BY 0.045
+//########################## size up F4 LAYER AND F4PIN 
+F4_all_af_test = OR F4_split_over_af_test F4_CFILLOPC_over_af_test F4_CFILL_over_af_test F4PIN
+F4_viol_area_af_test_1 = DENSITY Layer_COPY_F4 Layer_COPY2_F4 Boundary_COPY exempt_COPY_F4 [((AREA(Layer_COPY_F4) + AREA(Layer_COPY2_F4)) / (!AREA(exempt_COPY_F4) * AREA(Boundary_COPY))) + (GRCLC.Fx.DEN.Fy.2_F4_HALF_WAIVE_DEN * ~((AREA(Boundary_COPY) / 2500) - 0.5))] < 0.5 WINDOW 50 STEP GRCLC.Fx.DEN.Fy.2_F4_ss BACKUP INSIDE OF LAYER Boundary_rect BY POLYGON
+F4_viol_area_af_test_2 = DENSITY Layer_COPY_MxFx Layer_COPY2_MxFx Boundary_COPY exempt_COPY_MxFxDx [((AREA(Layer_COPY_MxFx) + AREA(Layer_COPY2_MxFx)) / (!AREA(exempt_COPY_MxFxDx) * AREA(Boundary_COPY))) + (GRCLC.MxLast.DEN.FxFirst.2_HALF_WAIVE_DEN * ~((AREA(Boundary_COPY) / 2500) - 0.5))] < 0.53 WINDOW 50 STEP GRCLC.MxLast.DEN.FxFirst.2_ss BACKUP INSIDE OF LAYER Boundary_rect BY POLYGON
+//########################## get all volated zone
+F4_viol_area_af_test = OR F4_viol_area_af_test_1 F4_viol_area_af_test_2
+
+//########################## polygon sized out of zone
+NOF4_viol_area_test = NOT F4_viol_area_af_test F4_all_af_test
+//F4FILL_empty_area_test_af = SIZE NOF4_viol_area_test BY 0.077 UNDEROVER
+F4FILL_empty_area_test_af = COPY NOF4_viol_area_test
+
+//########################## polygon sized out 0.022
+F4FILL_small_area_test_af = WITH WIDTH F4FILL_empty_area_test_af >= 0.022
+//F4FILL_tofill_area_test_af = SIZE F4FILL_small_area_test_af BY -0.066
+F4FILL_tofill_area_test_af = COPY F4FILL_small_area_test_af
+F4_exclusion_1 = INSIDE CELL F4CEXCLUD_split PESDCORE4LV_12_V
+F4_exclusion_2 = EXTENT CELL ln04lpp_s00_mc_rd2r_hsr_lvt_256x25m4b1c1 ln04lpp_s00_mc_ra1r_uhdrw_lvt_1024x136m4b2c1r2 CDMM_GoLd_beol_327x
+//########################## exclude cell part can not be sized
+F4_exclusion = OR F4_exclusion_1 F4_exclusion_2
+F4FILL_tofill_area_excl_test_af_1 = NOT F4FILL_tofill_area_test_af F4_exclusion
+das_1 = EXT [F4FILL_tofill_area_excl_test_af_1] <= 0.032 OPPOSITE EXTENDED 0.032
+das_2 = EXPAND EDGE das_1 INSIDE BY 0.016
+F4FILL_tofill_area_excl_test_af = NOT F4FILL_tofill_area_excl_test_af_1 das_2
+
+F4_cus_fill_shapes = RECTANGLES 0.022 0.169 0.050 INSIDE OF LAYER F4FILL_tofill_area_excl_test_af MAINTAIN SPACING
+
+//AF_TEST.3.ARFILLCUS { COPY F4_cus_fill_shapes }
+AF_TEST.3.ARFILLCUS { FLATTEN F4_cus_fill_shapes }
+
+DRC CHECK MAP AF_TEST.3.ARFILLCUS GDSII 177 0 STAR_1.custom.fill.gds MAXIMUM RESULTS ALL MAG 0.1 PREC 4000
+DRC CHECK MAP AF_TEST.3.ARFILLCUS GDSII 177 55 STAR_1.custom.fill.for_qrc.gds MAXIMUM RESULTS ALL MAG 0.1 PREC 4000

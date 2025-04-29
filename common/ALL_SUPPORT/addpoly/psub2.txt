@@ -1,0 +1,13 @@
+
+# if try dpma_rx_top oasis, you may turn on line 3-7
+#$L create layer 62.9
+#$L create polygon dpma_rx_top 62.9 1.998u 116.15u 251.998u 366.15u
+#$L create polygon dpma_rx_top 62.9 281.998u 116.15u 531.998u 366.15u
+#$L create polygon dpma_rx_top 62.9 561.998u 116.15u 811.998u 366.15u
+#$L create polygon dpma_rx_top 62.9 841.998u 116.15u 1091.998u 366.15u
+
+# if for mgnmnt_ss, below is OK
+$L create polygon mngmnt_ss 62.9 1.998u 116.15u 251.998u 366.15u
+$L create polygon mngmnt_ss 62.9 281.998u 116.15u 531.998u 366.15u
+$L create polygon mngmnt_ss 62.9 561.998u 116.15u 811.998u 366.15u
+$L create polygon mngmnt_ss 62.9 841.998u 116.15u 1091.998u 366.15u
