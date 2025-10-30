@@ -1,0 +1,20 @@
+TVF FUNCTION probe_check [/*
+
+proc p2p_ldl {} {
+    set exp1 [perc_ldl::design_p2p_experiment -rulecheck rule_p2p]
+    set exp_l [list $exp1]
+    perc_ldl::execute_p2p_checks -p2p_experiment_list [list $exp_l]
+}
+
+proc cd_ldl {} {
+    set exp1 [perc_ldl::design_cd_experiment -rulecheck rule_cd]
+    set exp_l [list $exp1]
+    perc_ldl::execute_cd_checks -cd_experiment_list [list $exp_l] -I 1 -V 1
+}
+*/]
+
+DFM YS AUTOSTART probe_check cd_ldl
+//DFM YS AUTOSTART probe_check p2p_ldl
+//PERC LDL CD POLY CONSTRAINT VALUE 0.1
+//PERC LDL CD M1 CONSTRAINT VALUE 0.1
+//PERC LDL CD M2 CONSTRAINT VALUE 0.2

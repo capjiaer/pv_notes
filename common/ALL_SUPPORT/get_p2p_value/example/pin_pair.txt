@@ -1,0 +1,6 @@
+# <START POINT> <LAYER>, <END POINT> <LAYER>, <RUN_TYPE>
+# P2P means run P2P, CD_P2P means both
+# Below is a template for real case
+0.405 3.364 ALPA, 4.726 3.364 ALPA, P2P
+1.5 5.0 metal2, 4 4.1 metal1, CD
+1.1 4.1 metal1, 4 4.1 metal1, CD_P2P
