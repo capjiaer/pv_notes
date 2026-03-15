@@ -1,0 +1,13 @@
+1: BLACK BOX IS:
+LVS BOX BLACK CELL1 CELL2 ..
+LVS BLACK BOX PORT REALL_METAL_LAYER PIN_LAYER CONNECTION_LAYER
+
+REAL_METAL_LAYER: such as M1i, Which means the metal do really exist for routing
+
+PIN_LAYER: such as M1_pin, Which is declare by:
+  "TEXT LAYER M1_pin ATTACH M1_pin metal1" 
+  PORT LAYER TEXT M1_pin
+
+connect layer is  the layer do really setup connection:
+metal1 = M1i or M1dummy
+connect metal1 metal2 by v1
